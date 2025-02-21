@@ -1,3 +1,4 @@
+
 create database sales_analysis;
 
 use sales_analysis;
@@ -36,7 +37,7 @@ total_amount decimal(10,2),
 );
 select * from orders;
 
-DELETE FROM orders;
+
 
 -- order_details table
 create table order_details(
@@ -79,7 +80,7 @@ select * from products;
 -- orders data 
 
 INSERT INTO orders (customer_id, order_date, total_amount) VALUES
-(1, '2025-02-01', 7000.00),
+(1, '2025-03-01', 7000.00),
 (2, '2025-02-05', 800.00),
 (3, '2025-02-10', 15000.00),
 (4, '2025-02-15', 20000.00),
@@ -89,3 +90,16 @@ INSERT INTO orders (customer_id, order_date, total_amount) VALUES
 select * from orders;
 
 
+
+-- data analysis query
+
+-- total sales revenue by month
+
+SELECT DATE_FORMAT(order_date,'%Y-%m') AS month ,
+SUM(total_amount) as total_revenue
+FROM orders
+GROUP BY month
+ORDER BY month
+
+
+-- top 5 best selling products
