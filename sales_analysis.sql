@@ -50,6 +50,19 @@ foreign key(product_id) references products(product_id) on delete cascade
 
 );
 
+alter table order_details
+ADD COLUMN   subtotal DECIMAL(10,2);
+
+-- continue from here
+
+ALTER TABLE order_details
+DROP FOREIGN KEY order_details_ibfk_1, 
+DROP FOREIGN KEY order_details_ibfk_2;
+
+
+
+
+
 -- populating the tables 
 
  -- customer ddata
@@ -89,6 +102,14 @@ INSERT INTO orders (customer_id, order_date, total_amount) VALUES
 
 select * from orders;
 
+-- order_details data
+
+INSERT INTO order_details (order_id, product_id, quantity, subtotal) VALUES
+(1, 1, 1, 20000.00),
+(1, 3, 2, 800.00),
+(2, 2, 1, 15000.00),
+(3, 4, 1, 7000.00),
+(3, 3, 1, 800.00);
 
 
 -- data analysis query
@@ -99,7 +120,16 @@ SELECT DATE_FORMAT(order_date,'%Y-%m') AS month ,
 SUM(total_amount) as total_revenue
 FROM orders
 GROUP BY month
-ORDER BY month
+ORDER BY month;
 
 
 -- top 5 best selling products
+
+-- there was no data forgot subtotal column and hard to drop the foreign key b4 inserting the column AND DATA
+SELECT p.product_name,
+SUM(od.quantity) AS total_sold
+FROM order_details od
+JOIN products p ON od.product_id=p.product_id
+GROUP BY p.product_name
+ORDER BY total_sold DESC
+LIMIT 5;
