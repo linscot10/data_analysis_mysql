@@ -62,3 +62,6 @@ SELECT * FROM
 
 SELECT * FROM
  layoffs_staging2 ;
+
+ SELECT * FROM
+ layoffs_staging2 ;
