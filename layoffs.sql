@@ -63,5 +63,35 @@ SELECT * FROM
 SELECT * FROM
  layoffs_staging2 ;
 
- SELECT * FROM
+-- standardizing data
+
+SELECT  DISTINCT(TRIM(company))
+FROM
  layoffs_staging2 ;
+
+
+SELECT company , TRIM(company)
+FROM
+ layoffs_staging2 ;
+
+
+ UPDATE layoffs_staging2
+ SET company = TRIM(company);
+
+
+SELECT industry 
+FROM
+ layoffs_staging2 ;
+SELECT DISTINCT industry 
+FROM
+ layoffs_staging2 
+ ORDER BY 1;
+SELECT * 
+FROM
+ layoffs_staging2 
+ WHERE industry
+ LIKE 'crypto%';
+
+ UPDATE layoffs_staging2 
+ SET industry='crypto'
+ WHERE industry LIKE 'crypto%'
