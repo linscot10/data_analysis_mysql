@@ -70,7 +70,7 @@ FROM
  layoffs_staging2 ;
 
 
-SELECT company , TRIM(company)
+SELECT DISTINCT company , TRIM(company)
 FROM
  layoffs_staging2 ;
 
@@ -95,3 +95,17 @@ FROM
  UPDATE layoffs_staging2 
  SET industry='crypto'
  WHERE industry LIKE 'crypto%'
+
+
+ SELECT DISTINCT location
+  from layoffs_staging2 ;
+
+  SELECT DISTINCT country , TRIM(TRAILING '.' FROM country)
+FROM
+ layoffs_staging2 
+ 
+ ORDER BY 1;
+
+  UPDATE layoffs_staging2 
+ SET country=TRIM(TRAILING '.' FROM country)
+ WHERE country  LIKE 'United States%'
