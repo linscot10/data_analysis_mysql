@@ -109,3 +109,18 @@ FROM
   UPDATE layoffs_staging2 
  SET country=TRIM(TRAILING '.' FROM country)
  WHERE country  LIKE 'United States%'
+
+
+-- change date from text
+use world_layoffs;
+SELECT `date`,
+STR_TO_DATE(`date`, '%m/%d/%Y') AS date
+FROM layoffs_staging2;
+SELECT `date`
+FROM layoffs_staging2;
+
+
+UPDATE layoffs_staging2
+SET `date` = STR_TO_DATE(`date`, '%m/%d/%Y');
+
+
