@@ -136,5 +136,30 @@ SELECT * FROM layoffs_staging2 t1
 JOIN layoffs_staging2 t2
 ON t1.company = t2.company
 -- AND t1.location = t2.location
-WHERE t1.industry is NULL || 
+WHERE (t1.industry is NULL || t1.industry='')
+AND t2.industry is NOT NULL;
+
+SELECT  t1.industry, t2.industry
+FROM layoffs_staging2 t1
+JOIN layoffs_staging2 t2
+ON t1.company = t2.company
+-- AND t1.location = t2.location
+WHERE (t1.industry is NULL || t1.industry='')
 AND t2.industry is NOT NULL
+
+UPDATE 
+layoffs_staging2 t1
+JOIN layoffs_staging2 t2
+ON t1.company = t2.company
+SET t1.industry =t2.industry
+WHERE t1.industry is NULL 
+AND t2.industry is NOT NULL
+
+
+UPDATE layoffs_staging2
+SET industry = NULL
+WHERE industry=''
+
+SELECT * from 
+layoffs_staging2 
+WHERE company="Airbnb"
