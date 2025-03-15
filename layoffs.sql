@@ -125,3 +125,16 @@ SET `date` = STR_TO_DATE(`date`, '%m/%d/%Y');
 
 ALTER TABLE layoffs_staging2
 MODIFY COLUMN `date` DATE;
+
+
+SELECT *
+FROM layoffs_staging2
+WHERE total_laid_off IS NULL
+AND percentage_laid_off is NULL;
+
+SELECT * FROM layoffs_staging2 t1
+JOIN layoffs_staging2 t2
+ON t1.company = t2.company
+-- AND t1.location = t2.location
+WHERE t1.industry is NULL || 
+AND t2.industry is NOT NULL
