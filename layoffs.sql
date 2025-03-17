@@ -163,3 +163,25 @@ WHERE industry=''
 SELECT * from 
 layoffs_staging2 
 WHERE company="Airbnb"
+
+-- DELETE null VALUES
+SELECT *
+FROM layoffs_staging2
+WHERE total_laid_off IS NULL
+AND percentage_laid_off is NULL;
+DELETE
+FROM layoffs_staging2
+WHERE total_laid_off IS NULL
+AND percentage_laid_off is NULL;
+
+
+SELECT *
+FROM layoffs_staging2;
+
+ALTER Table layoffs_staging2
+DROP COLUMN row_num;
+
+ALTER Table layoffs_staging2
+DROP COLUMN row_num;
+
+-- 356hrs
