@@ -183,5 +183,7 @@ DROP COLUMN row_num;
 
 ALTER Table layoffs_staging2
 DROP COLUMN row_num;
+ALTER Table layoffs_staging2
+DROP COLUMN row_num;
 
 -- 356hrs
