@@ -155,3 +155,16 @@ SELECT SUM(p.price * o.quantity) AS total_sales
 FROM orders;
 
 
+SELECT 
+    p.name AS product_name,
+    SUM(o.quantity) AS total_quantity_ordered
+FROM orders o
+JOIN products p ON o.product_id = p.product_id
+GROUP BY p.name;
+
+SELECT 
+    p.name AS product_name,
+    SUM(o.quantity) AS total_quantity_ordered
+FROM orders o
+JOIN products p ON o.product_id = p.product_id
+GROUP BY p.name;
