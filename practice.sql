@@ -162,9 +162,103 @@ FROM orders o
 JOIN products p ON o.product_id = p.product_id
 GROUP BY p.name;
 
-SELECT 
-    p.name AS product_name,
-    SUM(o.quantity) AS total_quantity_ordered
-FROM orders o
-JOIN products p ON o.product_id = p.product_id
-GROUP BY p.name;
+--  1. INNER JOIN
+-- returns only the macthing raws from both tables
+
+SELECT * from orders 
+INNER JOIN customers ON orders.customer_id=customers.customer_id;
+
+-- LEFT JOIN (or LEFT OUTER JOIN)
+-- returns all rows from the left table and matched rows from the right table
+
+SELECT * from customers
+LEFT JOIN orders ON customers.customer_id=orders.customer_id;
+
+--  RIGHT JOIN (or RIGHT OUTER JOIN)
+-- returns all rows from the right table and matched rows from the left
+
+SELECT * FROM orders 
+RIGHT JOIN customers ON orders.customer_id =customers.customer_id;
+
+-- FULL JOIN (or FULL OUTER JOIN)
+-- returns all rows when there is  match in either table
+
+SELECT * from orders
+FULL JOIN customers ON orders.customer_id =customers.customer_id;;
+
+SELECT * 
+FROM orders 
+LEFT JOIN customers ON orders.customer_id = customers.customer_id
+
+UNION
+
+SELECT * 
+FROM orders 
+RIGHT JOIN customers ON orders.customer_id = customers.customer_id;
+
+
+-- 🧪 Practice Task: Combine Sales and Customer Data
+-- 🔧 Tables Setup:
+
+CREATE TABLE customers1 (
+  id INT PRIMARY KEY,
+  name VARCHAR(100),
+  city VARCHAR(100)
+);
+
+CREATE TABLE sales (
+  id INT PRIMARY KEY,
+  customer_id INT,
+  product VARCHAR(100),
+  amount DECIMAL(10,2),
+  sale_date DATE
+);
+
+
+INSERT INTO customers1 (id, name, city) VALUES
+(1, 'Alice Johnson', 'New York'),
+(2, 'Bob Smith', 'Los Angeles'),
+(3, 'Carol Davis', 'Chicago'),
+(4, 'David Lee', 'Houston'),
+(5, 'Eva Brown', 'Phoenix');
+
+SELECT * FROM customers1;
+INSERT INTO sales (id, customer_id, product, amount, sale_date) VALUES
+(101, 1, 'Laptop', 1200.00, '2024-11-15'),
+(102, 1, 'Mouse', 25.99, '2024-12-01'),
+(103, 2, 'Keyboard', 45.00, '2025-01-05'),
+(104, 3, 'Monitor', 300.00, '2025-02-10'),
+(105, 4, 'Tablet', 499.99, '2025-03-03'),
+(106, 2, 'Laptop', 1100.00, '2025-03-15'),
+(107, 5, 'Phone', 899.00, '2025-04-01'),
+(108, 5, 'Headphones', 199.99, '2025-04-15');
+
+
+SELECT * FROM sales;
+
+-- Get total sales per customer;
+SELECT c.name, SUM(s.amount) AS total_sales
+FROM customers1 c
+JOIN sales s ON c.id = s.customer_id
+GROUP BY c.name;
+
+
+--  Find customers who haven’t made a purchase
+
+SELECT name
+FROM customers1
+WHERE id NOT IN (SELECT customer_id FROM sales);
+
+-- Show customers and their purchases (include those with no sales)
+SELECT c.name, s.product, s.amount
+FROM customers1 c
+LEFT JOIN sales s ON c.id = s.customer_id;
+
+--  Find top spender
+
+SELECT c.name, SUM(s.amount) AS total
+FROM customers1 c
+JOIN sales s ON c.id = s.customer_id
+GROUP BY c.name
+ORDER BY total DESC
+LIMIT 1;
