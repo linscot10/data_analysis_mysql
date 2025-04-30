@@ -262,3 +262,19 @@ JOIN sales s ON c.id = s.customer_id
 GROUP BY c.name
 ORDER BY total DESC
 LIMIT 1;
+
+
+SELECT customer_id, product, amount,
+       ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY amount DESC) AS row_num
+FROM sales;
+
+SELECT product, amount,
+       RANK() OVER (ORDER BY amount DESC) AS rank_position
+FROM sales;
+SELECT product, amount,
+       DENSE_RANK() OVER (ORDER BY amount DESC) AS rank_dense
+FROM sales;
+
+SELECT customer_id, amount,
+       SUM(amount) OVER (PARTITION BY customer_id ORDER BY sale_date) AS cumulative_total
+FROM sales;
