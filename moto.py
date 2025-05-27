@@ -39,7 +39,7 @@ def create_table_if_not_exists():
     cursor.close()
     conn.close()
 
-create_table_if_not_exists()
+
 def create_student(name,age,grade):
     conn=pool.get_connection()
     cursor= conn.cursor(prepared=True)
